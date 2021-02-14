@@ -17,7 +17,12 @@ class MenuController {
 
   @Route.get('/')
   Future<Response> findAll(Request request) async {
-    return Response.ok(jsonEncode(menu?.map((e) => e.toMap())?.toList() ?? []));
+    try {
+      return Response.ok(jsonEncode(menu?.map((e) => e.toMap())?.toList() ?? []));
+    } catch (e) {
+      print(e);
+      return Response.internalServerError();
+    }
   }
 
   Router get router => _$MenuControllerRouter(this);
