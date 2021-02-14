@@ -30,6 +30,6 @@ GetIt $initGetIt(
   gh.lazySingleton<IMenuRepository>(
       () => MenuRepository(get<IDatabaseConnection>()));
   gh.lazySingleton<IMenuService>(() => MenuService(get<IMenuRepository>()));
-  gh.factory<MenuController>(() => MenuController());
+  gh.factory<MenuController>(() => MenuController(get<IMenuService>()));
   return get;
 }
