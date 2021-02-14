@@ -10,8 +10,9 @@ part 'menu_controller.g.dart';
 @Injectable()
 class MenuController {
   List<Menu> menu = [
-    Menu(id: 1, name: 'Calabresa C/ Catupiry', price: 49.99),
-    Menu(id: 1, name: 'Calabresa C/ Catupiry', price: 49.99),
+    Menu(id: 1,name: 'Mussarela',price: 35.00),
+    Menu(id: 1,name: 'Calabreza',price: 35.00),
+    Menu(id: 1,name: 'Quatro Queijos',price: 35.00),
   ];
 
   @Route.get('/')
