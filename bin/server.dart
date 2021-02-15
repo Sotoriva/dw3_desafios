@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:dw3_desafios/application/middlewares/middlewares.dart';
+import 'package:dw3_desafios/application/routers/router_configure.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
+import 'package:shelf_router/shelf_router.dart';
 
 // For Google Cloud Run, set _hostname to '0.0.0.0'.
 const _hostname = 'localhost';
@@ -22,9 +25,15 @@ void main(List<String> args) async {
     return;
   }
 
+  final appRouter = Router();
+
+  RouterConfigure(appRouter).configure();
+
   var handler = const shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
-      .addHandler(_echoRequest);
+      .addMiddleware(cors())
+      .addMiddleware(defaultResponseContentType('application/json;charset=utf-8'))
+      .addHandler(appRouter);
 
   var server = await io.serve(handler, _hostname, port);
   print('Serving at http://${server.address.host}:${server.port}');
